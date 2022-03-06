@@ -42,7 +42,7 @@ function Cart() {
 
   const emptyCart = () => {
     return (
-      <div className="px-4 my-5 bg-light rounded-3 py-5">
+      <div className="px-4 my-5 rounded-3 py-5">
         <div className="container py-4">
           <div className="row">
             <h3>Your Cart is Empty</h3>
@@ -56,10 +56,7 @@ function Cart() {
     return (
       <div className="container">
         <div className="row">
-          <NavLink
-            to="/checkout"
-            className="btn btn-outline-primary mb-5 w-25 mx-auto"
-          >
+          <NavLink to="/checkout" className="btn btn-dark mb-5 w-25 mx-auto">
             Proceed To checkout
           </NavLink>
         </div>

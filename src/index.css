@@ -13,11 +13,24 @@ code {
 }
 
 .btn-outline-dark{
+  outline: none;
   border: 1px solid rgba(44, 82, 106, 0.934) !important;
 }
 
 .btn-outline-dark:hover{
   background-color:  rgba(44, 82, 106, 0.934) !important;
+}
+
+.btn-outline-dark:hover:focus{
+  box-shadow: none !important
+}
+
+.btn-outline-dark.active{
+  background-color:  rgba(44, 82, 106, 0.934) !important;
+}
+
+.btn-outline-dark.active:focus{
+  box-shadow: none !important
 }
 
 .btn-dark{
