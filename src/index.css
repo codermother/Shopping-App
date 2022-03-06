@@ -11,3 +11,19 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+.btn-outline-dark{
+  border: 1px solid rgba(44, 82, 106, 0.934) !important;
+}
+
+.btn-outline-dark:hover{
+  background-color:  rgba(44, 82, 106, 0.934) !important;
+}
+
+.btn-dark{
+  background-color: rgba(44, 82, 106, 0.934) !important;
+}
+
+.btn-dark:hover{
+  border:  rgba(44, 82, 106, 0.934) !important;
+}
