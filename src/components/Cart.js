@@ -2,7 +2,7 @@ import React from "react";
 import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
 import { NavLink } from "react-router-dom";
-import { deleteCart } from "../../redux/action";
+import { deleteCart } from "../redux/action";
 
 function Cart() {
   const state = useSelector((state) => state.handleCart);

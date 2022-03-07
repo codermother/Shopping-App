@@ -1,9 +1,8 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
-import "./Navbar.css";
 import { useSelector } from "react-redux";
-import Login from "../Login";
-import Signup from "../Signup";
+import Login from "./Login";
+import Signup from "./Signup";
 
 function Navbar() {
   const state = useSelector((state) => state.handleCart);

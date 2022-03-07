@@ -1,5 +1,5 @@
 import React from "react";
-import Products from "../Products/Products";
+import Products from "./Products";
 
 function Home() {
   return (
@@ -7,7 +7,7 @@ function Home() {
       <div className="hero">
         <div className="card bg-dark text-white border-0 ">
           <img
-            src="/assests/shopping-bg.jpeg"
+            src="/assets/shopping-bg.jpeg"
             className="card-img"
             alt="Background"
             height="700px"

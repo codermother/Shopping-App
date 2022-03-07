@@ -1,11 +1,12 @@
 import "./App.css";
-import Home from "./components/Home/Home";
-import Products from "./components/Products/Products";
-import Product from "./components/Product/Product";
-import Navbar from "./components/Navbar/Navbar";
+import Home from "./components/Home";
+import Products from "./components/Products";
+import Product from "./components/Product";
+import Navbar from "./components/Navbar";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import Cart from "./components/Cart/Cart";
+import Cart from "./components/Cart";
 import Checkout from "./components/Checkout";
+import About from "./components/About";
 
 function App() {
   return (
@@ -18,6 +19,7 @@ function App() {
           <Route path="/products/:id" element={<Product />} />
           <Route path="/cart" element={<Cart />} />
           <Route path="/checkout" element={<Checkout />} />
+          <Route path="/about" element={<About />} />
         </Routes>
       </Router>
     </div>

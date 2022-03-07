@@ -20,18 +20,18 @@ function Signup() {
         aria-hidden="true"
       >
         <div className="modal-dialog">
-          <div className="modal-content ps-4 pe-4 pt-1 pb-3">
-            <div className="modal-body">
-              <div className="d-flex justify-content-end align-items-center mb-1">
-                <button
-                  type="button"
-                  className="btn-close"
-                  data-bs-dismiss="modal"
-                  aria-label="Close"
-                ></button>
-              </div>
+          <div className="modal-content ">
+            <div className="d-flex justify-content-end align-items-center mb-1 mt-4 me-4">
+              <button
+                type="button"
+                className="btn-close"
+                data-bs-dismiss="modal"
+                aria-label="Close"
+              ></button>
+            </div>
+            <div className="modal-body ps-5 pe-5 pt-0 pb-3">
               <h5
-                className="modal-title login-header text-start mb-3"
+                className="modal-title login-header text-start mb-5"
                 id="exampleModalLabel"
               >
                 Register
@@ -93,7 +93,7 @@ function Signup() {
                     I agree the terms and conditions
                   </label>
                 </div>
-                <button type="submit" className="btn btn-dark w-100 mt-5">
+                <button type="submit" className="btn btn-dark w-100 mt-5 mb-3">
                   Register
                 </button>
               </form>

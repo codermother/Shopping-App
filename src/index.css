@@ -42,3 +42,7 @@ code {
   background-color: white !important;
  
 }
+
+.dark-text{
+  color: rgba(44, 82, 106, 0.934) !important;
+}
