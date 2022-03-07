@@ -23,7 +23,7 @@ function About() {
               provident est sint corporis, dolorem esse autem soluta molestiae
               optio quisquam eligendi obcaecati minima?
             </p>
-            <NavLink to="/contact" className="btn btn-dark px-3 w-50">
+            <NavLink to="/contact" className="btn btn-dark px-3 w-100 mt-4">
               Contact Us
             </NavLink>
           </div>
