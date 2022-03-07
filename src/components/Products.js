@@ -55,31 +55,31 @@ function Products() {
       <>
         <div className="buttons d-flex justify-content-center mb-5 pb-5">
           <button
-            className="btn btn-outline-dark me-2"
+            className="btn btn-outline-dark me-2 selected"
             onClick={() => setFilter(data)}
           >
             All
           </button>
           <button
-            className="btn btn-outline-dark me-2"
+            className="btn btn-outline-dark me-2 selected"
             onClick={() => filterProduct("men's clothing")}
           >
             Mens' Clothing
           </button>
           <button
-            className="btn btn-outline-dark me-2"
+            className="btn btn-outline-dark me-2 selected"
             onClick={() => filterProduct("women's clothing")}
           >
             Womens' Clothing
           </button>
           <button
-            className="btn btn-outline-dark me-2"
+            className="btn btn-outline-dark me-2 selected"
             onClick={() => filterProduct("jewelery")}
           >
             Jewelery
           </button>
           <button
-            className="btn btn-outline-dark me-2"
+            className="btn btn-outline-dark me-2 selected"
             onClick={() => filterProduct("electronics")}
           >
             Electronic
@@ -121,7 +121,9 @@ function Products() {
     <div className="container my-5 py-5">
       <div className="row">
         <div className="col-12 mb-5">
-          <h1 className="display-6 fw-bolder text-center">Latest Products</h1>
+          <h1 className="display-6 fw-bolder text-center dark-text">
+            Latest Products
+          </h1>
           <hr />
         </div>
       </div>

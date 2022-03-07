@@ -4,7 +4,6 @@ import "./Login.css";
 function Login() {
   return (
     <>
-      {/* <!-- Button trigger modal --> */}
       <button
         type="button"
         className="btn btn-outline-dark"
@@ -13,8 +12,6 @@ function Login() {
       >
         <i className="fa fa-sign-in me-1 "></i> Login
       </button>
-
-      {/* <!-- Modal --> */}
       <div
         className="modal fade"
         id="loginModal"

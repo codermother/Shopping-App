@@ -2,6 +2,18 @@
   font-size: 18px;
 }
 
+.nav-link:hover{
+  background-color:  rgba(44, 82, 106, 0.934);
+  color: white !important;
+  border-radius: 4px;
+}
+
+.nav-link:focus{
+  background-color:  rgba(44, 82, 106, 0.934);
+  color: white !important;
+  border-radius: 4px;
+}
+
 .card-img{
   width: unset;
   object-fit: cover;

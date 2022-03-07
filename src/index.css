@@ -15,10 +15,12 @@ code {
 .btn-outline-dark{
   outline: none;
   border: 1px solid rgba(44, 82, 106, 0.934) !important;
+  color: rgba(44, 82, 106, 0.934) !important;
 }
 
 .btn-outline-dark:hover{
   background-color:  rgba(44, 82, 106, 0.934) !important;
+  color: white !important;
 }
 
 .btn-outline-dark:hover:focus{
@@ -35,14 +37,22 @@ code {
 
 .btn-dark{
   background-color: rgba(44, 82, 106, 0.934) !important;
+  border: 1px solid rgba(44, 82, 106, 0.934) !important;
 }
 
 .btn-dark:hover{
   color: rgba(44, 82, 106, 0.934) !important;
+  border: 1px solid rgba(44, 82, 106, 0.934) !important;
   background-color: white !important;
- 
 }
 
 .dark-text{
   color: rgba(44, 82, 106, 0.934) !important;
+}
+
+.social-icons{
+  background-color: white;
+  color: rgba(44, 82, 106, 0.934) !important;
+  font-size: 30px;
+  margin-right: 5px;
 }
