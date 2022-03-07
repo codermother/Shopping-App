@@ -1,0 +1,29 @@
+.login-header{
+    font-size: 36px;
+    color: rgba(44, 82, 106, 0.934);
+}
+
+.fa-facebook{
+    background-color: rgba(44, 82, 106, 0.934) !important;
+    color: white;
+    padding: 5px 10px;
+    font-size: larger;
+}
+
+.fa-facebook{
+    background-color: rgba(44, 82, 106, 0.934) !important;
+    color: white !important;
+    padding: 5px 8px;
+    font-size: larger;
+    border-radius: 4px;
+}
+
+.btn-outline-dark:hover .fa-facebook{
+    background-color: white !important;
+    color: rgba(44, 82, 106, 0.934) !important;
+}
+
+.form-check-input:checked {
+    background-color: rgba(44, 82, 106, 0.934) !important;
+    border-color: rgba(44, 82, 106, 0.934) !important;
+}

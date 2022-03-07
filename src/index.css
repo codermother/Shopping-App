@@ -38,5 +38,7 @@ code {
 }
 
 .btn-dark:hover{
-  border:  rgba(44, 82, 106, 0.934) !important;
+  color: rgba(44, 82, 106, 0.934) !important;
+  background-color: white !important;
+ 
 }
