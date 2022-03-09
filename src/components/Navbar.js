@@ -1,11 +1,18 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import Login from "./Login";
 import Signup from "./Signup";
+import { signOut } from "../redux/action";
 
 function Navbar() {
   const state = useSelector((state) => state.handleCart);
+  const userState = useSelector((userState) => userState.handleUser);
+  const dispatch = useDispatch();
+
+  const logout = () => {
+    dispatch(signOut());
+  };
   return (
     <div>
       <nav className="navbar navbar-expand-lg navbar-light bg-light bg-white py-3 shadow-sm">
@@ -52,14 +59,29 @@ function Navbar() {
               </li>
             </ul>
             <div className="buttons">
-              <button className="btn">
-                <Login />
-                <Signup />
+              <div className="btn d-flex align-items-center">
+                {userState?.state !== null ? (
+                  <>
+                    <div>{userState?.state?.displayName}</div>
+                    <button
+                      type="button"
+                      className="btn btn-outline-dark ms-2"
+                      onClick={logout}
+                    >
+                      <i className="fa fa-sign-in me-1 "></i> Logout
+                    </button>
+                  </>
+                ) : (
+                  <>
+                    <Login /> <Signup />
+                  </>
+                )}
+
                 <NavLink to="/cart" className="btn btn-outline-dark ms-2">
                   <i className="fa fa-shopping-cart me-1"></i> Cart (
                   {state.length === 0 ? 0 : state.length})
                 </NavLink>
-              </button>
+              </div>
             </div>
           </div>
         </div>

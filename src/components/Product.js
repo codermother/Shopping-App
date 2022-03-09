@@ -12,7 +12,7 @@ function Product() {
   const addProduct = (product) => {
     dispatch(addCart(product));
   };
-
+  console.log(addCart());
   useEffect(() => {
     const getProduct = async () => {
       setLoading(true);

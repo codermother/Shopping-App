@@ -29,6 +29,7 @@ code {
 
 .btn-outline-dark.active{
   background-color:  rgba(44, 82, 106, 0.934) !important;
+  color: white !important;
 }
 
 .btn-outline-dark.active:focus{

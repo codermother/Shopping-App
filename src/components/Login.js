@@ -1,7 +1,38 @@
 import React from "react";
+import { auth, provider } from "../firebase";
 import "./Login.css";
+import { useDispatch, useSelector } from "react-redux";
+import { signIn } from "../redux/action";
 
 function Login() {
+  const dispatch = useDispatch();
+
+  const handleAuth = () => {
+    /*    if (!userName) {  */
+    auth
+      .signInWithPopup(provider)
+      .then((result) => {
+        setUser(result.user);
+        console.log(result);
+      })
+      .catch((error) => {
+        alert(error.message);
+      });
+    /*   } else if (userName) {
+      auth
+        .signOut()
+        .then(() => {
+          dispatch(setSignOutState());
+          history.push("/");
+        })
+        .catch((err) => alert(err.message));
+    }  */
+  };
+
+  const setUser = (user) => {
+    dispatch(signIn(user));
+  };
+
   return (
     <>
       <button
@@ -12,6 +43,7 @@ function Login() {
       >
         <i className="fa fa-sign-in me-1 "></i> Login
       </button>
+
       <div
         className="modal fade"
         id="loginModal"
@@ -36,7 +68,11 @@ function Login() {
               >
                 Login
               </h5>
-              <button className="btn btn-dark w-100 mb-4">
+              <button
+                className="btn btn-dark w-100 mb-4"
+                data-bs-dismiss="modal"
+                onClick={handleAuth}
+              >
                 <span className="fa fa-google me-2"></span> Sign in With Google
               </button>
               <button className="btn btn-outline-dark w-100 mb-4">

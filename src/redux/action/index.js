@@ -12,3 +12,17 @@ export const deleteCart = (product) => {
     payload: product,
   };
 };
+
+export const signIn = (user) => {
+  return {
+    type: "LOGIN",
+    payload: user,
+  };
+};
+
+export const signOut = () => {
+  return {
+    type: "SIGNOUT",
+    payload: null,
+  };
+};
