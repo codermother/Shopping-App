@@ -1,11 +1,16 @@
-import React from "react";
+import React, { useState } from "react";
 import { auth, provider } from "../firebase";
 import "./Login.css";
 import { useDispatch } from "react-redux";
 import { signIn } from "../redux/action";
+import { useNavigate } from "react-router-dom";
 
 function Login() {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [modal, setModal] = useState(false);
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const handleAuth = () => {
     auth
@@ -19,6 +24,19 @@ function Login() {
       });
   };
 
+  const login = (e) => {
+    e.preventDefault();
+    auth
+      .signInWithEmailAndPassword(email, password)
+      .then((auth) => {
+        console.log("testt", auth);
+        navigate("/");
+        setUser(auth.user);
+        setModal(false);
+      })
+      .catch((error) => alert(error.message));
+  };
+
   const setUser = (user) => {
     dispatch(signIn(user));
   };
@@ -28,21 +46,15 @@ function Login() {
       <button
         type="button"
         className="btn btn-outline-dark"
-        data-bs-toggle="modal"
-        data-bs-target="#loginModal"
+        onClick={(e) => setModal(true)}
       >
         <i className="fa fa-sign-in me-1 "></i> Login
       </button>
+      {modal === true && (
+        <>
+          <div className="formWrapper" onClick={() => setModal(false)} />
 
-      <div
-        className="modal fade"
-        id="loginModal"
-        tabIndex="-1"
-        aria-labelledby="exampleModalLabel"
-        aria-hidden="true"
-      >
-        <div className="modal-dialog">
-          <div className="modal-content ">
+          <div className="modal-content position-absolute">
             <div className="d-flex justify-content-end align-items-center mb-1 mt-4 me-4">
               <button
                 type="button"
@@ -69,7 +81,7 @@ function Login() {
                 <span className="fa fa-facebook me-2"></span> Sign in With
                 Facebook
               </button>
-              <form>
+              <form onSubmit={login}>
                 <div className="mb-3 text-start">
                   <label htmlFor="exampleInputEmail1" className="form-label">
                     Email address
@@ -80,6 +92,8 @@ function Login() {
                     id="exampleInputEmail1"
                     aria-describedby="emailHelp"
                     required
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
                   />
                   <div id="emailHelp" className="form-text">
                     We'll never share your email with anyone else.
@@ -94,6 +108,8 @@ function Login() {
                     type="password"
                     className="form-control"
                     id="exampleInputPassword1"
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
                   />
                 </div>
                 <div className="mb-3 form-check text-start">
@@ -113,8 +129,8 @@ function Login() {
               </form>
             </div>
           </div>
-        </div>
-      </div>
+        </>
+      )}
     </>
   );
 }
