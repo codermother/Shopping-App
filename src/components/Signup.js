@@ -1,32 +1,57 @@
-import React from "react";
+import { auth } from "../firebase";
+import React, { useState } from "react";
+import { useDispatch } from "react-redux";
+import { signIn } from "../redux/action";
+import { useNavigate } from "react-router-dom";
 
 function Signup() {
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [modal, setModal] = useState(false);
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  const register = (e) => {
+    e.preventDefault();
+
+    auth
+      .createUserWithEmailAndPassword(email, password)
+      .then((auth) => {
+        // it successfully created a new user with email and password
+        console.log(auth);
+        setModal(false);
+        if (auth) {
+          navigate("/");
+        }
+        setUser(auth.user);
+      })
+      .catch((error) => alert(error.message));
+  };
+
+  const setUser = (user) => {
+    dispatch(signIn(user));
+  };
+
   return (
     <>
       <button
         type="button"
         className="btn btn-outline-dark ms-2 "
-        data-bs-toggle="modal"
-        data-bs-target="#signupModal"
+        onClick={(e) => setModal(true)}
       >
         <i className="fa fa-user-plus me-1"></i> Register
       </button>
       {/* <!-- Modal --> */}
-      <div
-        className="modal fade"
-        id="signupModal"
-        tabIndex="-1"
-        aria-labelledby="exampleModalLabel"
-        aria-hidden="true"
-      >
-        <div className="modal-dialog">
-          <div className="modal-content ">
+      {modal === true && (
+        <>
+          <div className="formWrapper" onClick={() => setModal(false)} />
+          <div className="modal-content position-absolute ">
             <div className="d-flex justify-content-end align-items-center mb-1 mt-4 me-4">
               <button
                 type="button"
                 className="btn-close"
-                data-bs-dismiss="modal"
-                aria-label="Close"
+                onClick={(e) => setModal(false)}
               ></button>
             </div>
             <div className="modal-body ps-5 pe-5 pt-0 pb-3">
@@ -43,17 +68,19 @@ function Signup() {
                 <span className="fa fa-facebook me-2"></span> Sign in With
                 Facebook
               </button>
-              <form>
+              <form onSubmit={register}>
                 <div className="mb-3 text-start">
                   <label htmlFor="exampleInputEmail1" className="form-label">
                     Username
                   </label>
                   <input
-                    type="email"
+                    type="text"
                     className="form-control"
                     id="exampleInputEmail1"
                     aria-describedby="emailHelp"
                     required
+                    value={name}
+                    onChange={(e) => setName(e.target.value)}
                   />
                 </div>
                 <div className="mb-3 text-start">
@@ -66,6 +93,8 @@ function Signup() {
                     id="exampleInputEmail1"
                     aria-describedby="emailHelp"
                     required
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
                   />
                   <div id="emailHelp" className="form-text">
                     We'll never share your email with anyone else.
@@ -80,6 +109,8 @@ function Signup() {
                     type="password"
                     className="form-control"
                     id="exampleInputPassword1"
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
                   />
                 </div>
                 <div className="mb-3 form-check text-start">
@@ -99,8 +130,8 @@ function Signup() {
               </form>
             </div>
           </div>
-        </div>
-      </div>
+        </>
+      )}
     </>
   );
 }

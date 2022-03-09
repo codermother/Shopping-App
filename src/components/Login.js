@@ -1,14 +1,13 @@
 import React from "react";
 import { auth, provider } from "../firebase";
 import "./Login.css";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { signIn } from "../redux/action";
 
 function Login() {
   const dispatch = useDispatch();
 
   const handleAuth = () => {
-    /*    if (!userName) {  */
     auth
       .signInWithPopup(provider)
       .then((result) => {
@@ -18,15 +17,6 @@ function Login() {
       .catch((error) => {
         alert(error.message);
       });
-    /*   } else if (userName) {
-      auth
-        .signOut()
-        .then(() => {
-          dispatch(setSignOutState());
-          history.push("/");
-        })
-        .catch((err) => alert(err.message));
-    }  */
   };
 
   const setUser = (user) => {

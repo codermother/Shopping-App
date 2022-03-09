@@ -13,6 +13,7 @@ function Navbar() {
   const logout = () => {
     dispatch(signOut());
   };
+
   return (
     <div>
       <nav className="navbar navbar-expand-lg navbar-light bg-light bg-white py-3 shadow-sm">
@@ -60,9 +61,13 @@ function Navbar() {
             </ul>
             <div className="buttons">
               <div className="btn d-flex align-items-center">
-                {userState?.state !== null ? (
+                {userState && userState?.state !== null ? (
                   <>
-                    <div>{userState?.state?.displayName}</div>
+                    <div>
+                      {userState?.state?.displayName !== null
+                        ? userState?.state?.displayName
+                        : userState?.state?.email}
+                    </div>
                     <button
                       type="button"
                       className="btn btn-outline-dark ms-2"
