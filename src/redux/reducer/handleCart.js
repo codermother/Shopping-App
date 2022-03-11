@@ -1,5 +1,10 @@
 const cart = [];
 
+//Selector
+export const getBasketTotal = (state) =>
+  state?.reduce((amount, item) => item.price + amount, 0);
+/* console.log(getBasketTotal(state)) */
+
 const handleCart = (state = cart, action) => {
   const product = action.payload;
   switch (action.type) {

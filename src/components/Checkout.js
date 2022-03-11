@@ -1,8 +1,63 @@
-import React from "react";
+import { useElements, useStripe, CardElement } from "@stripe/react-stripe-js";
+import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
+import CurrencyFormat from "react-currency-format";
+import { getBasketTotal } from "../redux/reducer/handleCart";
+import axios from "../axios";
+import { useNavigate } from "react-router-dom";
 
 function Checkout() {
   const state = useSelector((state) => state.handleCart);
+  const { error, setError } = useState(null);
+  const { disabled, setDisabled } = useState(true);
+  const [succeeded, setSucceeded] = useState(false);
+  const [processing, setProcessing] = useState("");
+  const [clientSecret, setClientSecret] = useState(true);
+
+  const stripe = useStripe();
+  const elements = useElements();
+
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    // generate the special stripe secret which allows us to charge a customer
+    const getClientSecret = async () => {
+      const response = await axios({
+        method: "post",
+        // Stripe expects the total in a currencies subunits
+        url: `/payments/create?total=${getBasketTotal(state) * 100}`,
+      });
+      setClientSecret(response.data.clientSecret);
+    };
+
+    getClientSecret();
+  }, [state]);
+
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+    setProcessing(true);
+
+    const payload = await stripe
+      .confirmCardPayment(clientSecret, {
+        payment_method: {
+          card: elements.getElement(CardElement),
+        },
+      })
+      .then(({ paymentIntent }) => {
+        //paymentIntent = payment confirmation
+        setSucceeded(true);
+        setError(null);
+        setProcessing(false);
+
+        navigate("/orders");
+      });
+  };
+  console.log("state", state);
+
+  const handleChange = (event) => {
+    setDisabled(event.empty);
+    setError(event.error ? event.error.message : "");
+  };
 
   var total = 0;
   const itemList = (item) => {
@@ -17,7 +72,6 @@ function Checkout() {
       </li>
     );
   };
-  console.log(state);
 
   return (
     <>
@@ -49,216 +103,39 @@ function Checkout() {
                   Redeem
                 </button>
               </div>
+
+              {/* Errors */}
+              {error && <div>{error}</div>}
             </form>
           </div>
           <div className="col-md-7 col-lg-8">
-            <h4 className="mb-3">Billing address</h4>
             <form className="needs-validation" novalidate="">
-              <div className="row g-3">
-                <div className="col-sm-6">
-                  <label htmlFor="firstName" className="form-label">
-                    First name
-                  </label>
-                  <input
-                    type="text"
-                    className="form-control"
-                    id="firstName"
-                    placeholder=""
-                    value=""
-                    required=""
-                  />
-                  <div className="invalid-feedback">
-                    Valid first name is required.
-                  </div>
-                </div>
-
-                <div className="col-sm-6">
-                  <label htmlFor="lastName" className="form-label">
-                    Last name
-                  </label>
-                  <input
-                    type="text"
-                    className="form-control"
-                    id="lastName"
-                    placeholder=""
-                    value=""
-                    required=""
-                  />
-                  <div className="invalid-feedback">
-                    Valid last name is required.
-                  </div>
-                </div>
-
-                <div className="col-12">
-                  <label htmlFor="username" className="form-label">
-                    Username
-                  </label>
-                  <div className="input-group has-validation">
-                    <span className="input-group-text">@</span>
-                    <input
-                      type="text"
-                      className="form-control"
-                      id="username"
-                      placeholder="Username"
-                      required=""
-                    />
-                    <div className="invalid-feedback">
-                      Your username is required.
-                    </div>
-                  </div>
-                </div>
-
-                <div className="col-12">
-                  <label htmlFor="email" className="form-label">
-                    Email <span className="text-muted">(Optional)</span>
-                  </label>
-                  <input
-                    type="email"
-                    className="form-control"
-                    id="email"
-                    placeholder="you@example.com"
-                  />
-                  <div className="invalid-feedback">
-                    Please enter a valid email address htmlFor shipping updates.
-                  </div>
-                </div>
-
-                <div className="col-12">
-                  <label htmlFor="address" className="form-label">
-                    Address
-                  </label>
-                  <input
-                    type="text"
-                    className="form-control"
-                    id="address"
-                    placeholder="1234 Main St"
-                    required=""
-                  />
-                  <div className="invalid-feedback">
-                    Please enter your shipping address.
-                  </div>
-                </div>
-
-                <div className="col-12">
-                  <label htmlFor="address2" className="form-label">
-                    Address 2 <span className="text-muted">(Optional)</span>
-                  </label>
-                  <input
-                    type="text"
-                    className="form-control"
-                    id="address2"
-                    placeholder="Apartment or suite"
-                  />
-                </div>
-
-                <div className="col-md-5">
-                  <label htmlFor="country" className="form-label">
-                    Country
-                  </label>
-                  <select className="form-select" id="country" required="">
-                    <option value="">Choose...</option>
-                    <option>United States</option>
-                  </select>
-                  <div className="invalid-feedback">
-                    Please select a valid country.
-                  </div>
-                </div>
-
-                <div className="col-md-4">
-                  <label htmlFor="state" className="form-label">
-                    State
-                  </label>
-                  <select className="form-select" id="state" required="">
-                    <option value="">Choose...</option>
-                    <option>California</option>
-                  </select>
-                  <div className="invalid-feedback">
-                    Please provide a valid state.
-                  </div>
-                </div>
-
-                <div className="col-md-3">
-                  <label htmlFor="zip" className="form-label">
-                    Zip
-                  </label>
-                  <input
-                    type="text"
-                    className="form-control"
-                    id="zip"
-                    placeholder=""
-                    required=""
-                  />
-                  <div className="invalid-feedback">Zip code required.</div>
-                </div>
-              </div>
-
-              <hr className="my-4" />
-
-              <div className="form-check">
-                <input
-                  type="checkbox"
-                  className="form-check-input"
-                  id="same-address"
-                />
-                <label className="form-check-label" htmlFor="same-address">
-                  Shipping address is the same as my billing address
-                </label>
-              </div>
-
-              <div className="form-check">
-                <input
-                  type="checkbox"
-                  className="form-check-input"
-                  id="save-info"
-                />
-                <label className="form-check-label" htmlFor="save-info">
-                  Save this information htmlFor next time
-                </label>
-              </div>
-
-              <hr className="my-4" />
-
               <h4 className="mb-3">Payment</h4>
 
-              <div className="my-3">
-                <div className="form-check">
-                  <input
-                    id="credit"
-                    name="paymentMethod"
-                    type="radio"
-                    className="form-check-input"
-                    checked=""
-                    required=""
+              {/* stripe */}
+              <form onSubmit={handleSubmit}>
+                <CardElement onChange={handleChange} />
+                <div className="payment-priceContainer">
+                  <CurrencyFormat
+                    renderText={(value) => (
+                      <>
+                        <p>
+                          Subtotal ( {state.length} items):{" "}
+                          <strong>{value}</strong>
+                        </p>
+                      </>
+                    )}
+                    decimalScale={2}
+                    value={getBasketTotal(state)}
+                    displayType={"text"}
+                    thousandSeparator={true}
+                    prefix={"$"}
                   />
-                  <label className="form-check-label" htmlFor="credit">
-                    Credit card
-                  </label>
+                  <button disabled={processing || disabled || succeeded}>
+                    <span>{processing ? <p>Processing</p> : "Buy Now"} </span>
+                  </button>
                 </div>
-                <div className="form-check">
-                  <input
-                    id="debit"
-                    name="paymentMethod"
-                    type="radio"
-                    className="form-check-input"
-                    required=""
-                  />
-                  <label className="form-check-label" htmlFor="debit">
-                    Debit card
-                  </label>
-                </div>
-                <div className="form-check">
-                  <input
-                    id="paypal"
-                    name="paymentMethod"
-                    type="radio"
-                    className="form-check-input"
-                    required=""
-                  />
-                  <label className="form-check-label" htmlFor="paypal">
-                    PayPal
-                  </label>
-                </div>
-              </div>
+              </form>
 
               <div className="row gy-3">
                 <div className="col-md-6">

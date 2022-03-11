@@ -29,7 +29,6 @@ function Login() {
     auth
       .signInWithEmailAndPassword(email, password)
       .then((auth) => {
-        console.log("testt", auth);
         navigate("/");
         setUser(auth.user);
         setModal(false);
