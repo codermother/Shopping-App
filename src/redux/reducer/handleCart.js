@@ -39,6 +39,10 @@ const handleCart = (state = cart, action) => {
       }
       break;
 
+    case "EMPTYCART":
+      return (state = []);
+      break;
+
     default:
       return state;
       break;

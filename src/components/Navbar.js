@@ -13,7 +13,7 @@ function Navbar() {
   const logout = () => {
     dispatch(signOut());
   };
-
+  console.log("stat", state);
   return (
     <div>
       <nav className="navbar navbar-expand-lg navbar-light bg-light bg-white py-3 shadow-sm">

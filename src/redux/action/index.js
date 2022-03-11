@@ -13,6 +13,12 @@ export const deleteCart = (product) => {
   };
 };
 
+export const emptyCart = (product) => {
+  return {
+    type: "EMPTYCART",
+  };
+};
+
 export const signIn = (user) => {
   return {
     type: "LOGIN",

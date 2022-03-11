@@ -1,6 +1,6 @@
 import { useElements, useStripe, CardElement } from "@stripe/react-stripe-js";
 import React, { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import CurrencyFormat from "react-currency-format";
 import { getBasketTotal } from "../redux/reducer/handleCart";
 import axios from "../axios";
@@ -16,6 +16,7 @@ function Checkout() {
 
   const stripe = useStripe();
   const elements = useElements();
+  const dispatch = useDispatch();
 
   const navigate = useNavigate();
 
@@ -36,7 +37,6 @@ function Checkout() {
   const handleSubmit = async (event) => {
     event.preventDefault();
     setProcessing(true);
-
     const payload = await stripe
       .confirmCardPayment(clientSecret, {
         payment_method: {
@@ -45,14 +45,17 @@ function Checkout() {
       })
       .then(({ paymentIntent }) => {
         //paymentIntent = payment confirmation
-        setSucceeded(true);
-        setError(null);
         setProcessing(false);
-
-        navigate("/orders");
+        setSucceeded(true);
+        navigate("/");
+        dispatch({
+          type: "EMPTYCART",
+        });
+      })
+      .catch((error) => {
+        setError(error.response);
       });
   };
-  console.log("state", state);
 
   const handleChange = (event) => {
     setDisabled(event.empty);
@@ -88,128 +91,33 @@ function Checkout() {
               {state.map(itemList)}
               <li className="list-group-item d-flex justify-content-between">
                 <span>Total (USD)</span>
-                <strong>$12</strong>
+                <strong>${getBasketTotal(state)}</strong>
               </li>
             </ul>
-
-            <form className="card p-2">
-              <div className="input-group">
-                <input
-                  type="text"
-                  className="form-control"
-                  placeholder="Promo code"
-                />
-                <button type="submit" className="btn btn-secondary">
-                  Redeem
-                </button>
-              </div>
-
-              {/* Errors */}
-              {error && <div>{error}</div>}
-            </form>
           </div>
           <div className="col-md-7 col-lg-8">
-            <form className="needs-validation" novalidate="">
+            <div className="needs-validation" noValidate="">
               <h4 className="mb-3">Payment</h4>
 
               {/* stripe */}
               <form onSubmit={handleSubmit}>
-                <CardElement onChange={handleChange} />
+                <CardElement
+                  onChange={handleChange}
+                  className="form-control p-3 mb-5 mt-5"
+                />
                 <div className="payment-priceContainer">
-                  <CurrencyFormat
-                    renderText={(value) => (
-                      <>
-                        <p>
-                          Subtotal ( {state.length} items):{" "}
-                          <strong>{value}</strong>
-                        </p>
-                      </>
-                    )}
-                    decimalScale={2}
-                    value={getBasketTotal(state)}
-                    displayType={"text"}
-                    thousandSeparator={true}
-                    prefix={"$"}
-                  />
-                  <button disabled={processing || disabled || succeeded}>
-                    <span>{processing ? <p>Processing</p> : "Buy Now"} </span>
+                  <hr className="my-4" />
+                  <button
+                    className="w-100 btn btn-primary btn-lg p-1"
+                    disabled={processing || disabled || succeeded}
+                  >
+                    <span>{processing ? <p>Processing</p> : "Buy Now"}</span>
                   </button>
                 </div>
+                {/* Errors */}
+                {error && <div>{error}</div>}
               </form>
-
-              <div className="row gy-3">
-                <div className="col-md-6">
-                  <label htmlFor="cc-name" className="form-label">
-                    Name on card
-                  </label>
-                  <input
-                    type="text"
-                    className="form-control"
-                    id="cc-name"
-                    placeholder=""
-                    required=""
-                  />
-                  <small className="text-muted">
-                    Full name as displayed on card
-                  </small>
-                  <div className="invalid-feedback">
-                    Name on card is required
-                  </div>
-                </div>
-
-                <div className="col-md-6">
-                  <label htmlFor="cc-number" className="form-label">
-                    Credit card number
-                  </label>
-                  <input
-                    type="text"
-                    className="form-control"
-                    id="cc-number"
-                    placeholder=""
-                    required=""
-                  />
-                  <div className="invalid-feedback">
-                    Credit card number is required
-                  </div>
-                </div>
-
-                <div className="col-md-3">
-                  <label htmlFor="cc-expiration" className="form-label">
-                    Expiration
-                  </label>
-                  <input
-                    type="text"
-                    className="form-control"
-                    id="cc-expiration"
-                    placeholder=""
-                    required=""
-                  />
-                  <div className="invalid-feedback">
-                    Expiration date required
-                  </div>
-                </div>
-
-                <div className="col-md-3">
-                  <label htmlFor="cc-cvv" className="form-label">
-                    CVV
-                  </label>
-                  <input
-                    type="text"
-                    className="form-control"
-                    id="cc-cvv"
-                    placeholder=""
-                    required=""
-                  />
-                  <div className="invalid-feedback">Security code required</div>
-                </div>
-              </div>
-
-              <hr className="my-4" />
-
-              <button className="w-100 btn btn-primary btn-lg" type="submit">
-                Continue to checkout
-              </button>
-            </form>
+            </div>
           </div>
         </div>
       </div>
