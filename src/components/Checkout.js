@@ -1,13 +1,14 @@
 import { useElements, useStripe, CardElement } from "@stripe/react-stripe-js";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import CurrencyFormat from "react-currency-format";
 import { getBasketTotal } from "../redux/reducer/handleCart";
 import axios from "../axios";
 import { useNavigate } from "react-router-dom";
+import db from "../firebase";
 
 function Checkout() {
   const state = useSelector((state) => state.handleCart);
+  const userState = useSelector((userState) => userState.handleUser);
   const { error, setError } = useState(null);
   const { disabled, setDisabled } = useState(true);
   const [succeeded, setSucceeded] = useState(false);
@@ -45,9 +46,19 @@ function Checkout() {
       })
       .then(({ paymentIntent }) => {
         //paymentIntent = payment confirmation
+        db.collection("users")
+          .doc(userState?.state._delegate.uid)
+          .collection("orders")
+          .doc(paymentIntent.id)
+          .set({
+            basket: state,
+            amount: paymentIntent.amount,
+            created: paymentIntent.created,
+          });
+
         setProcessing(false);
         setSucceeded(true);
-        navigate("/");
+        navigate("/orders");
         dispatch({
           type: "EMPTYCART",
         });
@@ -108,7 +119,7 @@ function Checkout() {
                 <div className="payment-priceContainer">
                   <hr className="my-4" />
                   <button
-                    className="w-100 btn btn-primary btn-lg p-1"
+                    className="w-100 btn btn-primary btn-lg p-1 d-flex align-items-center justify-content-center"
                     disabled={processing || disabled || succeeded}
                   >
                     <span>{processing ? <p>Processing</p> : "Buy Now"}</span>

@@ -13,7 +13,7 @@ function Navbar() {
   const logout = () => {
     dispatch(signOut());
   };
-  console.log("stat", state);
+
   return (
     <div>
       <nav className="navbar navbar-expand-lg navbar-light bg-light bg-white py-3 shadow-sm">
@@ -59,7 +59,7 @@ function Navbar() {
                 </NavLink>
               </li>
             </ul>
-            <div className="buttons">
+            <div className="buttons d-flex">
               <div className="btn d-flex align-items-center">
                 {userState && userState?.state !== null ? (
                   <>
@@ -68,6 +68,10 @@ function Navbar() {
                         ? userState?.state?.displayName
                         : userState?.state?.email}
                     </div>
+
+                    <NavLink to="/orders" className="btn btn-outline-dark ms-2">
+                      Orders
+                    </NavLink>
                     <button
                       type="button"
                       className="btn btn-outline-dark ms-2"

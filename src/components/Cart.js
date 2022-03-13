@@ -1,15 +1,27 @@
 import React from "react";
 import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
-import { NavLink } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { deleteCart } from "../redux/action";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 function Cart() {
   const state = useSelector((state) => state.handleCart);
+  const userState = useSelector((userState) => userState.handleUser);
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const removeFromCart = (item) => {
     dispatch(deleteCart(item));
+  };
+
+  const proceedCheckout = () => {
+    if (userState !== null) {
+      navigate("/checkout");
+    } else {
+      toast("Please login first!");
+    }
   };
 
   const cartItems = (product) => {
@@ -56,9 +68,13 @@ function Cart() {
     return (
       <div className="container">
         <div className="row">
-          <NavLink to="/checkout" className="btn btn-dark mb-5 w-25 mx-auto">
-            Proceed To checkout
-          </NavLink>
+          <button
+            onClick={proceedCheckout}
+            className="btn btn-dark mb-5 w-25 mx-auto"
+          >
+            Proceed To Checkout
+          </button>
+          <ToastContainer />
         </div>
       </div>
     );

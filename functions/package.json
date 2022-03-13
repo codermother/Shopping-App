@@ -14,11 +14,9 @@
   },
   "main": "index.js",
   "dependencies": {
-    "@firebase/database-compat": "^0.1.5",
-    "express": "^4.17.3",
     "firebase-admin": "^9.8.0",
     "firebase-functions": "^3.14.1",
-    "stripe": "^8.208.0"
+    "stripe": "^8.209.0"
   },
   "devDependencies": {
     "eslint": "^7.6.0",
