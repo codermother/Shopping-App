@@ -13,6 +13,7 @@
     "firebase": "^9.6.8",
     "firebase-tools": "^10.2.2",
     "font-awesome": "^4.7.0",
+    "moment": "^2.29.1",
     "react": "^17.0.2",
     "react-currency-format": "^1.1.0",
     "react-dom": "^17.0.2",

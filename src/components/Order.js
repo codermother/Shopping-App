@@ -1,10 +1,11 @@
+import moment from "moment";
 import React from "react";
 import CurrencyFormat from "react-currency-format";
 
 function Order({ order }) {
   return (
     <div className="mb-5 border p-4">
-      <div className="d-flex justify-content-between mb-4">
+      <div className="d-flex justify-content-between mb-3">
         <h5>
           <strong>Order-id:</strong>
           <small> {order.id}</small>
@@ -18,7 +19,7 @@ function Order({ order }) {
           prefix={"$"}
         />
       </div>
-      {/*       <p>{moment.unix(order.data.created).format("MMMM Do YYYY, h:mma")}</p> */}
+      <p>{moment.unix(order.data.created).format("MMMM Do YYYY, h:mma")}</p>
 
       {order.data.basket?.map((item) => (
         <div className="row mb-3 p-3 d-flex align-items-center order-item">

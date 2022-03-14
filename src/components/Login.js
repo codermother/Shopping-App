@@ -59,6 +59,7 @@ function Login() {
                 className="btn-close"
                 data-bs-dismiss="modal"
                 aria-label="Close"
+                onClick={() => setModal(false)}
               ></button>
             </div>
             <div className="modal-body ps-5 pe-5 pt-0 pb-3">
@@ -74,10 +75,6 @@ function Login() {
                 onClick={handleAuth}
               >
                 <span className="fa fa-google me-2"></span> Sign in With Google
-              </button>
-              <button className="btn btn-outline-dark w-100 mb-4">
-                <span className="fa fa-facebook me-2"></span> Sign in With
-                Facebook
               </button>
               <form onSubmit={login}>
                 <div className="mb-3 text-start">

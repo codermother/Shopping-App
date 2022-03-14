@@ -63,10 +63,6 @@ function Signup() {
               <button className="btn btn-dark w-100 mb-4">
                 <span className="fa fa-google me-2"></span> Sign in With Google
               </button>
-              <button className="btn btn-outline-dark w-100 mb-4">
-                <span className="fa fa-facebook me-2"></span> Sign in With
-                Facebook
-              </button>
               <form onSubmit={register}>
                 <div className="mb-3 text-start">
                   <label htmlFor="exampleInputEmail1" className="form-label">
