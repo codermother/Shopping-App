@@ -13,14 +13,14 @@ You can check the site here
 - Redux
 - Axios
 - Bootstrap
-- Payment page with stripe functionality
-- Login Page with full login functionality (sign up and sign in) with firebase authentication
+- Stripe functionality
+- Full login functionality (sign up and sign in) with firebase authentication,
 - Firebase Google Authentication (Full Login)
+- Firebase for real time database
 - Deploy cloud function to process payment (servesless)
 - Firebase for real time database
-- Deploy the App LIVE on Firebase
 - Store orders for logged in user
-- Deploy the app live on Firebase
+- Deploy the App LIVE on Firebase
 
 ## Author
 
